@@ -66,9 +66,9 @@ Ready to contribute? Here's how to set up `treecrawl` for local development.
 
 3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development::
 
-    $ mkvirtualenv treecrawl
-    $ cd treecrawl/
-    $ python setup.py develop
+    $ python -m venv .treecrawl.venv
+    $ source .treecrawl.venv/bin/activate
+    $ pip install -r requirements-dev.txt
 
 4. Create a branch for local development::
 

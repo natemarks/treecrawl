@@ -35,3 +35,16 @@ This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypack
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+
+
+Build Notes
+------------
+
+Pipenv cna't pi the setuptools and pip versions so we ned to manually update them in the pvirtual environment.  These are the upload the a new version:
+
+::
+
+    python -m venv .treecrawl.venv
+    source .treecrawl.venv/bin/activate
+    pip install -r requirements-dev.txt
+
