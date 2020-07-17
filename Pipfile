@@ -1,0 +1,14 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+
+
+[dev-packages]
+pytest = "*"
+twine = "*"
+yapf = "*"
+wheel = "*"
+bump2version = "*"
