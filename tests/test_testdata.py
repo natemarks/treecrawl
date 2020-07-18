@@ -35,7 +35,7 @@ def test_upperificator(test_case, tmp_path, request):
     # copy iitial and expected test case data to temp path
     t.copy_test_data_to_temp(test_case)
     # Execute against initial data
-    Upperificator(root_dir=t.intial, dry_run=False)
+    Upperificator(root_dir=t.initial, dry_run=False)
     # compare all modified target files in initial against the matching
     # file in expected
     for cmp in t.files_to_compare():

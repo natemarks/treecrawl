@@ -69,7 +69,7 @@ class TestData(object):
         self.temp_case_data = os.path.join(
             str(self.temp_dir), *[self.test_name, test_case]
         )
-        self.intial = os.path.join(self.temp_case_data, "initial")
+        self.initial = os.path.join(self.temp_case_data, "initial")
         self.expected = os.path.join(self.temp_case_data, "expected")
         shutil.copytree(source, self.temp_case_data)
 
@@ -84,8 +84,8 @@ class TestData(object):
 
         result = []
 
-        for file in os.listdir(self.intial):
-            t_file_path = os.path.join(self.intial, file)
+        for file in os.listdir(self.initial):
+            t_file_path = os.path.join(self.initial, file)
             e_file_path = os.path.join(self.expected, file)
             t_file_contents = file_to_string(t_file_path)
             if os.path.exists(e_file_path):
