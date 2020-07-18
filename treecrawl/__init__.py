@@ -5,9 +5,9 @@ __email__ = "npmarks@gmail.com"
 __version__ = "0.1.2"
 
 
-from .treecrawl import (
-    DirEdit,
-    TestData,
+from .diredit import DirEdit
+from .testdata import TestData
+from .utility import (
     file_to_string,
     find_path_to_ancestor,
     string_to_file,

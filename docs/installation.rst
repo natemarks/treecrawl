@@ -12,7 +12,7 @@ To install treecrawl, run this command in your terminal:
 
 .. code-block:: console
 
-    $ pip install treecrawl
+    $ pip install --index-url https://test.pypi.org/simple/ treecrawl
 
 This is the preferred method to install treecrawl, as it will always install the most recent stable release.
 
