@@ -26,7 +26,8 @@ libraries to make it easier to maniuplate files in a directory tree
 Features
 --------
 
-* TODO
+* DirEdit: Base class used to transform contents of a directory tree
+* TestData: Helper class for testing directories edited by DirEdit
 
 Credits
 -------
