@@ -80,18 +80,20 @@ class TestData(object):
             List[Tuple[str, str]]: list of string pairs that can be compared by
             assert
         """
-        import os
+        from os import listdir
+        from os.path import exists, isdir, join
 
         result = []
 
-        for file in os.listdir(self.initial):
-            t_file_path = os.path.join(self.initial, file)
-            e_file_path = os.path.join(self.expected, file)
-            t_file_contents = file_to_string(t_file_path)
-            if os.path.exists(e_file_path):
-                e_file_contents = file_to_string(e_file_path)
+        for file in listdir(self.initial):
+            tfp = join(self.initial, file)
+            efp = join(self.expected, file)
+            if isdir(tfp) or isdir(efp):
+                continue
+            t_file_contents = file_to_string(tfp)
+            if exists(efp):
+                e_file_contents = file_to_string(efp)
             else:
                 e_file_contents = None
             result.append((t_file_contents, e_file_contents))
-        pass
         return result
