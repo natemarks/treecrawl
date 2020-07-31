@@ -174,3 +174,18 @@ def mkdir_p(target, is_file=False):
             raise
         pass
     return path
+
+
+def get_all_files(target_dir):
+    """Recurse the all subdirs and list os abs paths
+
+    Args:
+        target_dir (str): path to target directory
+    """
+    import os
+
+    res = []
+    for root, d_names, f_names in os.walk(target_dir):
+        for f in f_names:
+            res.append(os.path.join(root, f))
+    return res

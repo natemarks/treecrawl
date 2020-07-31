@@ -80,12 +80,12 @@ class TestData(object):
             List[Tuple[str, str]]: list of string pairs that can be compared by
             assert
         """
-        from os import listdir
         from os.path import exists, isdir, join
+        from treecrawl.utility import get_all_files
 
         result = []
 
-        for file in listdir(self.initial):
+        for file in get_all_files(self.initial):
             tfp = join(self.initial, file)
             efp = join(self.expected, file)
             if isdir(tfp) or isdir(efp):

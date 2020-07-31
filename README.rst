@@ -41,7 +41,7 @@ This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypack
 Build Notes
 ------------
 
-Pipenv cna't pi the setuptools and pip versions so we ned to manually update them in the pvirtual environment.  These are the upload the a new version:
+Setup dev venv
 
 ::
 

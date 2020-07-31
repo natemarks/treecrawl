@@ -12,6 +12,7 @@ from .utility import (
     find_path_to_ancestor,
     string_to_file,
     string_to_log_level,
+    get_all_files,
 )
 
 __all__ = (
@@ -21,4 +22,5 @@ __all__ = (
     "find_path_to_ancestor",
     "string_to_file",
     "string_to_log_level",
+    "get_all_files",
 )
