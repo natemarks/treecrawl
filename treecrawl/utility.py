@@ -3,19 +3,25 @@ import sys
 from typing import List
 
 
+def create_module_logger(mn):
+    ml = logging.getLogger(mn)
+    ml.setLevel(logging.INFO)
+
+    ch = logging.StreamHandler(sys.stdout)
+
+    formatter = logging.Formatter(
+        "%(asctime)s - {%(name)s} - "
+        "{%(filename)s:%(funcName)s:%(lineno)d} - "
+        "%(levelname)s - %(message)s"
+    )
+    ch.setFormatter(formatter)
+
+    ml.addHandler(ch)
+    return ml
+
+
 module_name = str(__name__)
-module_logger = logging.getLogger(module_name)
-module_logger.setLevel(logging.INFO)
-
-ch = logging.StreamHandler(sys.stdout)
-
-formatter = logging.Formatter(
-    "%(asctime)s - {%(name)s} - {%(filename)s:%(funcName)s:%(lineno)d} -"
-    " %(levelname)s - %(message)s"
-)
-ch.setFormatter(formatter)
-
-module_logger.addHandler(ch)
+module_logger = create_module_logger(module_name)
 
 
 def find_path_to_ancestor(target_dir=None):
@@ -189,3 +195,43 @@ def get_all_files(target_dir):
         for f in f_names:
             res.append(os.path.join(root, f))
     return res
+
+
+def strip_suffix(s, suffix):
+    """ Remove suffix frm the end of s
+    is s = "aaa.gpg" and suffix = ".gpg", return "aaa"
+    if s is not a string return None
+    if suffix is not a string, return s
+
+    :param str s: string to modify
+    :param str suffix: suffix to remove
+
+    :rtype: Optional[str]=None
+    """
+    if not isinstance(s, str):
+        return None
+    if not isinstance(suffix, str):
+        return s
+    if s.endswith(suffix):
+        return s[: -len(suffix)]
+    return s
+
+
+def strip_prefix(s, prefix):
+    """ Remove prefix frm the beginning of s
+    is s = "some_something" and prefix = "some_", return "something"
+    if s is not a string return None
+    if prefix is not a string, return s
+
+    :param str s: string to modify
+    :param str prefix: prefix to remove
+
+    :rtype: Optional[str]=None
+    """
+    if not isinstance(s, str):
+        return None
+    if not isinstance(prefix, str):
+        return s
+    if s.startswith(prefix):
+        return s[len(prefix) :]  # noqa: E203
+    return s

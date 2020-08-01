@@ -30,8 +30,5 @@ def test_get_all_files(test_case, tmp_path, request):
     # copy iitial and expected test case data to temp path
     t.copy_test_data_to_temp(test_case)
     # Execute against initial data
-    res = get_all_files(
-        "/tmp/pytest-of-nate/pytest-8/test_get_all_files_happy_path_0"
-    )
+    res = get_all_files(tmp_path)
     assert len(res) == 3
-

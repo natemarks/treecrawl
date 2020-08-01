@@ -1,20 +1,9 @@
 import logging
-import sys
 from .utility import find_path_to_ancestor, string_to_log_level
+from treecrawl.utility import create_module_logger
 
 module_name = str(__name__)
-module_logger = logging.getLogger(module_name)
-module_logger.setLevel(logging.INFO)
-
-ch = logging.StreamHandler(sys.stdout)
-
-formatter = logging.Formatter(
-    "%(asctime)s - {%(name)s} - {%(filename)s:%(funcName)s:%(lineno)d} -"
-    " %(levelname)s - %(message)s"
-)
-ch.setFormatter(formatter)
-
-module_logger.addHandler(ch)
+module_logger = create_module_logger(module_name)
 
 
 class DirEdit(object):
