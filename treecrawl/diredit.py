@@ -23,12 +23,9 @@ class DirEdit(object):
         :rtype: List[str]
 
         """
-        import os
+        from treecrawl.utility import get_all_files
 
-        res = []
-        for (dirpath, dirnames, filenames) in os.walk(self.root_dir):
-            res += [os.path.join(dirpath, file) for file in filenames]
-        return res
+        return get_all_files(self.root_dir)
 
     def filter_target_files(self):
         """ List of files (absolute path strings) that should be processed
