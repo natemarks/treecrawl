@@ -4,25 +4,14 @@ import shutil
 import nox
 
 
-def tests_impl(session, extras="socks,secure,brotli"):
+def tests_impl(session):
     # Install deps and the package itself.
-    session.install("-r", "dev-requirements.txt")
-    session.install(".[{extras}]".format(extras=extras))
+    session.install("-r", "requirements-dev.txt")
 
     # Show the pip version.
     session.run("pip", "--version")
     # Print the Python version and bytesize.
     session.run("python", "--version")
-    session.run(
-        "python", "-c", "import struct; print(struct.calcsize('P') * 8)"
-    )
-    # Print OpenSSL information.
-    session.run("python", "-m", "OpenSSL.debug")
-
-    # Inspired from https://github.com/pyca/cryptography
-    # We use parallel mode and then combine here so that coverage.py will take
-    # the paths like .tox/pyXY/lib/pythonX.Y/site-packages/urllib3/__init__.py
-    # and collapse them into src/urllib3/__init__.py.
 
     session.run(
         "coverage",
@@ -37,43 +26,26 @@ def tests_impl(session, extras="socks,secure,brotli"):
         *(session.posargs or ("test/",)),
         env={"PYTHONWARNINGS": "always::DeprecationWarning"}
     )
-    session.run("coverage", "combine")
-    session.run("coverage", "report", "-m")
-    session.run("coverage", "xml")
+    # session.run("coverage", "combine")
+    # session.run("coverage", "report", "-m")
+    # session.run("coverage", "xml")
 
 
-@nox.session(python=["2.7", "3.5", "3.6", "3.7", "3.8", "3.9", "pypy"])
+@nox.session(python=["3.5", "3.6", "3.7", "3.8", "3.9", "pypy"])
 def test(session):
-    tests_impl(session)
 
+    # Install deps and the package itself.
+    session.install("-r", "requirements-dev.txt")
 
-@nox.session(python=["2", "3"])
-def google_brotli(session):
-    # https://pypi.org/project/Brotli/ is the Google version of brotli, so
-    # install it separately and don't install our brotli extra (which installs
-    # brotlipy).
-    session.install("brotli")
-    tests_impl(session, extras="socks,secure")
+    # Show the pip version.
+    session.run("pip", "--version")
+    # Print the Python version and bytesize.
+    session.run("python", "--version")
+    # This CD is really important. it allows the tests to locate testdata
+    # I should fix the tests to dynamically locate testdata
+    session.cd('tests')
+    session.run("pytest")
 
-
-@nox.session(python="2.7")
-def app_engine(session):
-    session.install("-r", "dev-requirements.txt")
-    session.install(".")
-    session.run(
-        "coverage",
-        "run",
-        "--parallel-mode",
-        "-m",
-        "pytest",
-        "-r",
-        "sx",
-        "test/appengine",
-        *session.posargs
-    )
-    session.run("coverage", "combine")
-    session.run("coverage", "report", "-m")
-    session.run("coverage", "xml")
 
 
 @nox.session()

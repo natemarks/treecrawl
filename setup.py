@@ -10,11 +10,12 @@ with open("README.rst") as readme_file:
 with open("HISTORY.rst") as history_file:
     history = history_file.read()
 
-requirements = []
-
-setup_requirements = [
-    "pytest-runner",
+# abandoned utility.path_type experiment
+requirements = [
+    # "python-magic==0.4.18"
 ]
+
+setup_requirements = []
 
 test_requirements = [
     "pytest>=3",

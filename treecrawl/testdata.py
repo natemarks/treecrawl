@@ -8,15 +8,17 @@ from typing import List, Tuple
 class TestData(object):
     """ Test helper object representing the test and test case data
 
-    TestData gives pytests access to test data.  It's instantiated
+    TestData gives pytest access to test data.  It's instantiated
     for each test case iteration. It assumes that every test name is unique and
-    has a corresponding directory name in the project. It furter assumes that
+    has a corresponding directory name in the project. It further assumes that
     each test is parameterized with a list of test cases.  Each of these test
     cases has a corresponding directory immediately below the test directory.
     See the usage document for examples.
 
 
     """
+
+    __test__ = False
 
     def __init__(self, test_name, temp_dir):
         self.temp_dir = temp_dir

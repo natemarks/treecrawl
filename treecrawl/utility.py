@@ -235,3 +235,119 @@ def strip_prefix(s, prefix):
     if s.startswith(prefix):
         return s[len(prefix) :]  # noqa: E203
     return s
+
+
+def validate_path(ip=None):
+    """ Give a valid path return absolute
+
+    If the provided relative or absoltue path is invalide, raise
+    RuntimeError exception
+
+    If none is provided, use current working directory
+
+    :param str ip: absolute or relative path
+
+    :rtype: str
+    """
+    import os
+    if ip is None:
+        ip = os.getcwd()
+    rp = os.path.realpath(ip)
+    if os.path.exists(rp):
+        return rp
+    else:
+        raise RuntimeError('Invalid path: {}'.format(rp))
+
+#
+# def path_type(ip):
+#     """ return a string describing the ype of object represented by a path
+#
+#     examples:
+#      - "dir" (if it's a directory)
+#      - 'text/plain; charset=us-ascii' (mimetype if not)
+#
+#     :param str ip: absolute path to file or directory
+#
+#     :rtype: str
+#     """
+#     import magic
+#     import os
+#     if os.path.isdir(ip):
+#         return "dir"
+#
+#     if os.path.isfile(ip):
+#         m = magic.Magic()
+#         return m.from_file(ip)
+
+
+def file_name_from_path(ff):
+    """ Return the file name given a path
+
+    "a/b/g/file.txt" -> "file.txt
+
+    :param str if: pathto file
+
+    :rtype: str
+    """
+    import os
+    words = ff.split(os.path.sep)
+    return words[-1]
+
+
+def output_file_from_input_file(input_root, output_root, input_file):
+    # normalize root formats to make sure both have trialing slashes
+    import os
+    in_r = os.path.join(input_root, '')
+    out_r = os.path.join(output_root, '')
+    # /a/b/c/file.txt, /a/b/ -> c/file.txt
+    file_relative = strip_prefix(input_file, input_root)
+    # if there's a leading slash, remove it
+    if file_relative.startswith(os.path.sep):
+        file_relative = file_relative[1:]
+    res = os.path.join(out_r, file_relative)
+    return res
+
+
+def locate_subdir(target_dir):
+    """ Recursively look for subdir and return absolute path
+
+    This is really useful in locating resource directories  for tests when
+    the test could be run from the project directory or tests directory.
+
+    :param str target_dir: directory to locate
+
+    :rtype: List[Dict[str, str]]
+    """
+    import os
+
+    for root, d_names, f_names in os.walk(os.getcwd()):
+        for d in d_names:
+            if d == target_dir:
+                return os.path.join(root, d)
+    return None
+
+
+def compare_directories(d1, d2):
+    """ Compare directories that should be exact matches
+
+
+
+    :param str d1: left directory
+    :param str d2: left directory
+
+
+    :rtype: bool
+    """
+    import filecmp
+    # iterate d1 files and compare to companion d2 file
+    for left in get_all_files(d1):
+        right = output_file_from_input_file(d1, d2, left)
+        if not filecmp.cmp(left, right, shallow=False):
+            return False
+
+    # iterate d2 files and compare to companion d1 file
+    for right in get_all_files(d2):
+        left = output_file_from_input_file(d2, d1, right)
+        if not filecmp.cmp(right, left, shallow=False):
+            return False
+    return True

@@ -6,7 +6,6 @@ import pytest
 from treecrawl.diredit import DirEdit
 from treecrawl.testdata import TestData
 
-
 class Upperificator(DirEdit):
     """Convert file characters to upper case
 
@@ -32,7 +31,7 @@ def test_upperificator(test_case, tmp_path, request):
     """
     # Instantiate a TestData object with the name of the test (originalname)
     t = TestData(request.node.originalname, str(tmp_path))
-    # copy iitial and expected test case data to temp path
+    # copy initial and expected test case data to temp path
     t.copy_test_data_to_temp(test_case)
     # Execute against initial data
     Upperificator(root_dir=t.initial, dry_run=False)
