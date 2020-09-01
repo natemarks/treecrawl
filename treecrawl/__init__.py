@@ -23,7 +23,7 @@ from .utility import (
     get_all_files,
     strip_prefix,
     strip_suffix,
-    validate_path
+    validate_path,
 )
 
 __all__ = (
@@ -45,5 +45,5 @@ __all__ = (
     "validate_path",
     "locate_subdir",
     "output_file_from_input_file",
-    "file_name_from_path"
+    "file_name_from_path",
 )

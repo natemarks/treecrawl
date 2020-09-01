@@ -74,3 +74,6 @@ If other versions are flagged as missing or are skipped you can just pyenv insta
 
 
 run 'make test' to run all the tests. I use pyenv to install all of the supported python versions so nox can run the full matrix of tests for me
+
+
+always run ' make lint'

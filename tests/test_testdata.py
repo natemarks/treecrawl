@@ -6,10 +6,9 @@ import pytest
 from treecrawl.diredit import DirEdit
 from treecrawl.testdata import TestData
 
-class Upperificator(DirEdit):
-    """Convert file characters to upper case
 
-    """
+class Upperificator(DirEdit):
+    """Convert file characters to upper case"""
 
     def __init__(self, root_dir=None, dry_run=True):
         super().__init__(root_dir=root_dir, dry_run=dry_run)
@@ -23,12 +22,11 @@ class Upperificator(DirEdit):
 
 
 @pytest.mark.parametrize(
-    "test_case", ["pets", "cities"],
+    "test_case",
+    ["pets", "cities"],
 )
 def test_upperificator(test_case, tmp_path, request):
-    """Run and compare results to expected
-
-    """
+    """Run and compare results to expected"""
     # Instantiate a TestData object with the name of the test (originalname)
     t = TestData(request.node.originalname, str(tmp_path))
     # copy initial and expected test case data to temp path

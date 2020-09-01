@@ -6,7 +6,7 @@ from typing import List, Tuple
 
 
 class TestData(object):
-    """ Test helper object representing the test and test case data
+    """Test helper object representing the test and test case data
 
     TestData gives pytest access to test data.  It's instantiated
     for each test case iteration. It assumes that every test name is unique and

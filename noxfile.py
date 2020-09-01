@@ -43,9 +43,8 @@ def test(session):
     session.run("python", "--version")
     # This CD is really important. it allows the tests to locate testdata
     # I should fix the tests to dynamically locate testdata
-    session.cd('tests')
+    session.cd("tests")
     session.run("pytest")
-
 
 
 @nox.session()
@@ -82,7 +81,11 @@ def lint(session):
     )
 
     session.run(
-        "flake8", "treecrawl", "tests", "noxfile.py", "setup.py",
+        "flake8",
+        "treecrawl",
+        "tests",
+        "noxfile.py",
+        "setup.py",
     )
 
 

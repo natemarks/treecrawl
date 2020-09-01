@@ -25,7 +25,7 @@ module_logger = create_module_logger(module_name)
 
 
 def find_path_to_ancestor(target_dir=None):
-    """ Find path to parent directory among the ancestors
+    """Find path to parent directory among the ancestors
 
     target_dir is the base name of a directory  (without path separator) that
     will be discovered from amogn the parent directories
@@ -72,8 +72,9 @@ def find_path_to_subdirectory(target_dir, search_path=None) -> List[str]:
 
 
     Args:
-        target_dir (str): Base directory name to search for among sub
-        directories
+        target_dir (str): Base directory name to search for among
+            sub-directories
+
         search_path (str, optional): If no search path is provided, start in
         current directory. Defaults to None.
 
@@ -100,7 +101,7 @@ def find_path_to_subdirectory(target_dir, search_path=None) -> List[str]:
 
 
 def file_to_string(file_path):
-    """ Return file contents as a string
+    """Return file contents as a string
 
     :param str file_path: absolute path to a file
     :rtype: str
@@ -115,7 +116,7 @@ def file_to_string(file_path):
 
 
 def string_to_file(input_string, file_path):
-    """ Write/Over-write a file's contents with a string
+    """Write/Over-write a file's contents with a string
 
 
     :param str input_string: string data
@@ -126,7 +127,7 @@ def string_to_file(input_string, file_path):
 
 
 def string_to_log_level(log_level_string):
-    """ Given a string convert it to a logging level for use by logging.log
+    """Given a string convert it to a logging level for use by logging.log
 
     Accept the string ('CRITICAL', 'ERROR', 'WARNING', 'INFO', 'DEBUG') or the
     integer ('10', '20', '30', '40', '50') format
@@ -156,7 +157,7 @@ def string_to_log_level(log_level_string):
 
 
 def mkdir_p(target, is_file=False):
-    """ Create the directory path to the target.
+    """Create the directory path to the target.
     If the target is a file, create the path to its parent (directory)
 
     :param str target: path to a target directory or file
@@ -198,7 +199,7 @@ def get_all_files(target_dir):
 
 
 def strip_suffix(s, suffix):
-    """ Remove suffix frm the end of s
+    """Remove suffix frm the end of s
     is s = "aaa.gpg" and suffix = ".gpg", return "aaa"
     if s is not a string return None
     if suffix is not a string, return s
@@ -218,7 +219,7 @@ def strip_suffix(s, suffix):
 
 
 def strip_prefix(s, prefix):
-    """ Remove prefix frm the beginning of s
+    """Remove prefix frm the beginning of s
     is s = "some_something" and prefix = "some_", return "something"
     if s is not a string return None
     if prefix is not a string, return s
@@ -238,7 +239,7 @@ def strip_prefix(s, prefix):
 
 
 def validate_path(ip=None):
-    """ Give a valid path return absolute
+    """Give a valid path return absolute
 
     If the provided relative or absoltue path is invalide, raise
     RuntimeError exception
@@ -250,13 +251,15 @@ def validate_path(ip=None):
     :rtype: str
     """
     import os
+
     if ip is None:
         ip = os.getcwd()
     rp = os.path.realpath(ip)
     if os.path.exists(rp):
         return rp
     else:
-        raise RuntimeError('Invalid path: {}'.format(rp))
+        raise RuntimeError("Invalid path: {}".format(rp))
+
 
 #
 # def path_type(ip):
@@ -281,15 +284,16 @@ def validate_path(ip=None):
 
 
 def file_name_from_path(ff):
-    """ Return the file name given a path
+    """Return the file name given a path
 
     "a/b/g/file.txt" -> "file.txt
 
-    :param str if: pathto file
+    :param str ff: pathto file
 
     :rtype: str
     """
     import os
+
     words = ff.split(os.path.sep)
     return words[-1]
 
@@ -297,10 +301,11 @@ def file_name_from_path(ff):
 def output_file_from_input_file(input_root, output_root, input_file):
     # normalize root formats to make sure both have trialing slashes
     import os
-    in_r = os.path.join(input_root, '')
-    out_r = os.path.join(output_root, '')
+
+    in_r = os.path.join(input_root, "")
+    out_r = os.path.join(output_root, "")
     # /a/b/c/file.txt, /a/b/ -> c/file.txt
-    file_relative = strip_prefix(input_file, input_root)
+    file_relative = strip_prefix(input_file, in_r)
     # if there's a leading slash, remove it
     if file_relative.startswith(os.path.sep):
         file_relative = file_relative[1:]
@@ -309,7 +314,7 @@ def output_file_from_input_file(input_root, output_root, input_file):
 
 
 def locate_subdir(target_dir):
-    """ Recursively look for subdir and return absolute path
+    """Recursively look for subdir and return absolute path
 
     This is really useful in locating resource directories  for tests when
     the test could be run from the project directory or tests directory.
@@ -328,7 +333,7 @@ def locate_subdir(target_dir):
 
 
 def compare_directories(d1, d2):
-    """ Compare directories that should be exact matches
+    """Compare directories that should be exact matches
 
 
 
@@ -339,6 +344,7 @@ def compare_directories(d1, d2):
     :rtype: bool
     """
     import filecmp
+
     # iterate d1 files and compare to companion d2 file
     for left in get_all_files(d1):
         right = output_file_from_input_file(d1, d2, left)

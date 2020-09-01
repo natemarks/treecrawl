@@ -8,9 +8,7 @@ from treecrawl.casehelper import CaseHelper
 
 
 class MakeUpper(Transformer):
-    """Convert non-ASCII files to ASCII
-
-    """
+    """Convert non-ASCII files to ASCII"""
 
     def __init__(self, input, output, dry_run=False):
         super().__init__(input=input, output=output, dry_run=dry_run)
@@ -24,44 +22,47 @@ class MakeUpper(Transformer):
 
 
 @pytest.mark.parametrize(
-    "test_case", ["pets", "cities"],
+    "test_case",
+    ["pets", "cities"],
 )
 def test_populate_temp(test_case, tmp_path, request, testdata, update_golden):
-    """Run and compare results to expected
-
-    """
-    import filecmp
+    """Run and compare results to expected"""
     import os
     from treecrawl.utility import compare_directories
 
     # Instantiate a CaseHelper object with the name of the test (originalname)
-    c = CaseHelper(testdata, request.node.originalname, test_case, str(tmp_path))
+    c = CaseHelper(
+        testdata, request.node.originalname, test_case, str(tmp_path)
+    )
     assert compare_directories(c.golden, c.expected)
-    assert compare_directories(os.path.join(c.temp_case_dir, 'input'),
-                          os.path.join(c.project_case_dir, 'input'))
+    assert compare_directories(
+        os.path.join(c.temp_case_dir, "input"),
+        os.path.join(c.project_case_dir, "input"),
+    )
 
 
 @pytest.mark.parametrize(
-    "test_case", ["pets", "cities"],
+    "test_case",
+    ["pets", "cities"],
 )
 def test_make_upper(test_case, tmp_path, request, testdata, update_golden):
-    c = CaseHelper(testdata,
-                   request.node.originalname,
-                   test_case,
-                   str(tmp_path),
-                   update_golden=update_golden)
+    c = CaseHelper(
+        testdata,
+        request.node.originalname,
+        test_case,
+        str(tmp_path),
+        update_golden=update_golden,
+    )
 
     """when update golden is set by running pytest --update_golden,
     the project golden files are deleted. This step generates new ones from
     the the function under test """
     if update_golden:
-        m = MakeUpper(c.input, c.golden)
+        _ = MakeUpper(c.input, c.golden)
 
-    m = MakeUpper(c.input, c.actual)
+    _ = MakeUpper(c.input, c.actual)
     for r in c.compare():
         succeeded, compared = r
         assert succeeded
         if not succeeded:
             print("input: {}\nactual: {}\nexpected: {}".format(*compared))
-
-

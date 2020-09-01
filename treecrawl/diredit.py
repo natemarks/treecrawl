@@ -19,7 +19,7 @@ class DirEdit(object):
         self.run()
 
     def get_all_files(self):
-        """ Discover all the files in the root_dir
+        """Discover all the files in the root_dir
 
         :rtype: List[str]
 
@@ -29,7 +29,7 @@ class DirEdit(object):
         return get_all_files(self.root_dir)
 
     def filter_target_files(self):
-        """ List of files (absolute path strings) that should be processed
+        """List of files (absolute path strings) that should be processed
 
         Override this method to customize. The base implementation returns
         everything
@@ -74,15 +74,18 @@ class DirEdit(object):
 
 
 class Transformer(object):
-    """ Transform a file or directory
+    """Transform a file or directory
 
-    input and output should both be paths to files OR both be directories with the same
-    structure
+    input and output should both be paths to files OR both be directories
+    with the same structure
 
     """
-    def __init__(self, input=None, output=None, log_level="INFO",
-                 dry_run=True):
+
+    def __init__(
+        self, input=None, output=None, log_level="INFO", dry_run=True
+    ):
         import json
+
         if input is None:
             self._input = os.getcwd()
         else:
@@ -102,7 +105,7 @@ class Transformer(object):
             "input": self.input,
             "output": self.output,
             "log_level": self.log_level,
-            "dry_run": str(self.dry_run)
+            "dry_run": str(self.dry_run),
         }
         self.logger.info(json.dumps(msg_dict))
         self.run()
@@ -126,22 +129,25 @@ class Transformer(object):
         return self._output
 
     def in_place(self):
-        """ Return true if teh output will overwrite the input
+        """Return true if teh output will overwrite the input
 
         :rtype: bool
         """
         return self._input == self._output
 
     def source_dest_as_dict(self):
-        """ If the target us a directory, return dict of input:output files
+        """If the target us a directory, return dict of input:output files
 
         The logic for selecting targets can be customized by overriding this
         method.
 
         :rtype: Dict[str, str]
         """
-        from treecrawl.utility import get_all_files,\
-            output_file_from_input_file
+        from treecrawl.utility import (
+            get_all_files,
+            output_file_from_input_file,
+        )
+
         res = {}
         if os.path.isfile(self.input):
             return {self.input: self.output}
@@ -151,15 +157,15 @@ class Transformer(object):
             if Transformer.is_target(file):
                 # transform input file and write to destination
                 # in the same relative path in the output dir
-                res[file] = output_file_from_input_file(self.input,
-                                                        self.output,
-                                                        file)
+                res[file] = output_file_from_input_file(
+                    self.input, self.output, file
+                )
 
         return res
 
     @staticmethod
     def is_target(i_file):
-        """ Return True is the file meets criteria to be transformed
+        """Return True is the file meets criteria to be transformed
 
         This is used by filter_files to build a target list.  The base
         implementation edits all files. Override this method to customizing
@@ -171,12 +177,12 @@ class Transformer(object):
 
         :rtype: bool
         """
-        if str(i_file).endswith('.skip'):
+        if str(i_file).endswith(".skip"):
             return False
         return os.path.isfile(i_file)
 
     def transform(self, source_file, destination_file):
-        """ Override this with transformation logic
+        """Override this with transformation logic
 
         read the soure_file, do whatever and write to destination_file
 
@@ -200,7 +206,7 @@ class Transformer(object):
 
     @staticmethod
     def write_string_to_output(s, o):
-        """ writes a string to a an absolute file path
+        """writes a string to a an absolute file path
 
         also creates necessary directories along the way
 
@@ -209,6 +215,7 @@ class Transformer(object):
         :rtype: List[Dict[str, str]]
         """
         from treecrawl.utility import string_to_file, mkdir_p
+
         if type(s) != str:
             msg = "Expected string input. Got {}".format(str(type(s)))
             raise RuntimeError(msg)
