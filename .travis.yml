@@ -11,5 +11,5 @@ install: pip install -r requirements-dev.txt
 
 # Command to run tests, e.g. python setup.py test
 script:
-  - nox -s blacken
-  - nox -s test
+  - nox -s lint
+  - pytest
