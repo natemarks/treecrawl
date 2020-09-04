@@ -2,7 +2,7 @@
 
 __author__ = """Nate Marks"""
 __email__ = "npmarks@gmail.com"
-__version__ = "0.1.12"
+__version__ = "0.1.13"
 
 
 from .diredit import DirEdit, Transformer

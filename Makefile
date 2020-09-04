@@ -3,7 +3,7 @@
 
 SHELL := /bin/bash
 
-VERSION := 0.1.12
+VERSION := 0.1.13
 
 define HELP_MESSAGE
 make clean: clean up build files
