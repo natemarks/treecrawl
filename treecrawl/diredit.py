@@ -167,7 +167,7 @@ class Transformer(object):
 
         input_files = get_all_files(self.input)
         for file in input_files:
-            if Transformer.is_target(file):
+            if self.is_target(file):
                 # transform input file and write to destination
                 # in the same relative path in the output dir
                 res[file] = output_file_from_input_file(
@@ -176,8 +176,7 @@ class Transformer(object):
 
         return res
 
-    @staticmethod
-    def is_target(i_file):
+    def is_target(self, i_file):
         """Return True is the file meets criteria to be transformed
 
         This is used by filter_files to build a target list.  The base
@@ -190,13 +189,7 @@ class Transformer(object):
 
         :rtype: bool
         """
-        if str(i_file).endswith(".skip"):
-            return False
-
-        if ".git" in i_file.split(os.path.sep):
-            return False
-
-        return os.path.isfile(i_file)
+        raise NotImplementedError
 
     def transform(self, source_file, destination_file):
         """Override this with transformation logic

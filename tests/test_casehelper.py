@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """Tests for `treecrawl` package."""
-
+import os
 import pytest
 from treecrawl.diredit import Transformer
 from treecrawl.casehelper import CaseHelper
@@ -12,6 +12,14 @@ class MakeUpper(Transformer):
 
     def __init__(self, input, output, dry_run=False):
         super().__init__(input=input, output=output, dry_run=dry_run)
+
+    def is_target(self, i_file):
+        if str(i_file).endswith(".skip"):
+            return False
+
+        if ".git" in i_file.split(os.path.sep):
+            return False
+        return True
 
     def transform(self, source_file, destination_file):
         from treecrawl.utility import file_to_string
