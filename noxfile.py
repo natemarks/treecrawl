@@ -6,7 +6,7 @@ import nox
 
 def tests_impl(session):
     # Install deps and the package itself.
-    session.install("-r", "requirements-dev.txt")
+    session.install("-e", ".[dev]")
 
     # Show the pip version.
     session.run("pip", "--version")
@@ -35,7 +35,7 @@ def tests_impl(session):
 def test(session):
 
     # Install deps and the package itself.
-    session.install("-r", "requirements-dev.txt")
+    session.install("-e", ".[dev]")
 
     # Show the pip version.
     session.run("pip", "--version")
@@ -91,7 +91,7 @@ def lint(session):
 
 @nox.session
 def docs(session):
-    session.install("-r", "docs/requirements.txt")
+    session.install("-e", ".[dev]")
     session.install(".[socks,secure,brotli]")
 
     session.chdir("docs")

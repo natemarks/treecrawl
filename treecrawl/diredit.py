@@ -81,6 +81,8 @@ class Transformer(object):
 
     """
 
+    dry_run_prefix = "SKIPPING! (DRY RUN): "
+
     def __init__(
         self, input=None, output=None, log_level="INFO", dry_run=True
     ):
@@ -109,6 +111,17 @@ class Transformer(object):
         }
         self.logger.info(json.dumps(msg_dict))
         self.run()
+
+    def dry_run_prefix(self, mm):
+        """if the dry_run flag is set prepend the message with skipping..
+
+        :param str mm: message to prepend
+
+        :rtype: str
+        """
+        if self.dry_run:
+            return Transformer.dry_run_prefix + mm
+        return mm
 
     @property
     def input(self):
@@ -179,12 +192,22 @@ class Transformer(object):
         """
         if str(i_file).endswith(".skip"):
             return False
+
+        if ".git" in i_file.split(os.path.sep):
+            return False
+
         return os.path.isfile(i_file)
 
     def transform(self, source_file, destination_file):
         """Override this with transformation logic
 
         read the soure_file, do whatever and write to destination_file
+
+        maybe use the convenience method dry_run_prefix to tune your log
+        messages
+
+        writing files may need to be encoding aware. look methods that help
+        wiht that like write_string_to_output`
 
         :param str source_file: read this file as input
         :param str destination_file: write transformed file here

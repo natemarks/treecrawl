@@ -30,32 +30,27 @@ clean-pyc: ## remove Python file artifacts
 	find . -name '__pycache__' -exec rm -fr {} +
 
 blacken: ## use black to reformat files
-	nox -s blacken
+	( \
+		source .venv/bin/activate; \
+		pip install -e .[dev]; \
+		nox -s blacken; \
+	)
 
 lint: ## check style with flake8
-	nox -s lint
+	( \
+		source .venv/bin/activate; \
+		pip install -e .[dev]; \
+		nox -s lint; \
+	)
 
 test: ## run tests quickly with the default Python
 	rm -rf .venv
 	python3 -m venv .venv
 	( \
 		source .venv/bin/activate; \
-		pip install -r requirements-dev.txt; \
+		pip install -e .[dev]; \
 		nox -s test; \
 	)
-
-
-editable-test:
-	rm -rf .venv
-	python3 -m venv .venv
-	( \
-		source .venv/bin/activate; \
-		pip install -r requirements-dev.txt; \
-		pip install -e .; \
-	)
-
-test-all: ## run tests on every Python version with tox
-	tox
 
 coverage: ## check code coverage quickly with the default Python
 	coverage run --source treecrawl -m pytest
@@ -79,7 +74,7 @@ dist: clean ## builds source and wheel package
 	python3 -m venv .venv
 	( \
 		source .venv/bin/activate; \
-		pip install -r requirements-dev.txt; \
+		pip install -e .[dev]; \
 		python setup.py sdist bdist_wheel; \
 	)
 
