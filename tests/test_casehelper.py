@@ -68,7 +68,8 @@ def test_make_upper(test_case, tmp_path, request, testdata, update_golden):
     if update_golden:
         _ = MakeUpper(c.input, c.golden)
 
-    _ = MakeUpper(c.input, c.actual)
+    m = MakeUpper(c.input, c.actual)
+    m.run()
     for r in c.compare():
         succeeded, compared = r
         assert succeeded

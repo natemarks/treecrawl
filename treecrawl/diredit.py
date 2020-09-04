@@ -110,7 +110,6 @@ class Transformer(object):
             "dry_run": str(self.dry_run),
         }
         self.logger.info(json.dumps(msg_dict))
-        self.run()
 
     def add_dry_run_prefix(self, mm):
         """if the dry_run flag is set prepend the message with skipping..
