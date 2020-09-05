@@ -107,7 +107,7 @@ def file_to_string(file_path):
     :rtype: str
 
     """
-    with open(file_path, "r") as f:
+    with open(file_path, "rb") as f:
         try:
             data = f.read()
         except UnicodeDecodeError as err:
@@ -123,7 +123,7 @@ def file_to_string(file_path):
                 file_path
             )
             raise RuntimeError(msg) from err
-    return data
+    return data.decode("utf8", "ignore")
 
 
 def string_to_file(input_string, file_path):
