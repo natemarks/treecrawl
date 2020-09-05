@@ -110,8 +110,19 @@ def file_to_string(file_path):
     with open(file_path, "r") as f:
         try:
             data = f.read()
-        except UnicodeDecodeError:
-            data = ""
+        except UnicodeDecodeError as err:
+            msg = """Failed to read file: {0}
+            You probably need to set the locale in your environment
+            This is often a proiblem inside docker containers
+            something like this might work:
+            RUN locale-gen en_US.UTF-8
+            ENV LANG en_US.UTF-8
+            ENV LANGUAGE en_US:en
+            ENV LC_ALL en_US.UTF-8
+            """.format(
+                file_path
+            )
+            raise RuntimeError(msg) from err
     return data
 
 
