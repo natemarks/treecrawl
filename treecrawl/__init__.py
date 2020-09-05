@@ -5,8 +5,7 @@ __email__ = "npmarks@gmail.com"
 __version__ = "0.1.16"
 
 
-from .diredit import DirEdit, Transformer
-from .testdata import TestData
+from .transformer import Transformer
 from .casehelper import CaseHelper
 from .utility import (
     create_module_logger,
@@ -27,9 +26,7 @@ from .utility import (
 )
 
 __all__ = (
-    "DirEdit",
     "Transformer",
-    "TestData",
     "CaseHelper",
     "create_module_logger",
     "compare_directories",

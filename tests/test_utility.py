@@ -10,7 +10,7 @@ from treecrawl.utility import (
     get_all_files,
     validate_path,
 )
-from treecrawl.testdata import TestData
+from treecrawl.casehelper import CaseHelper
 
 
 def test_find_path_to_subdirectory(tmp_path):
@@ -25,19 +25,31 @@ def test_find_path_to_subdirectory(tmp_path):
 
 
 @pytest.mark.parametrize(
-    "test_case",
-    ["happy_path"],
+    "test_case,file_count",
+    [("happy_path", 3)],
 )
-def test_get_all_files(test_case, tmp_path, request):
-    """Run and compare results to expected"""
+def test_get_all_files(
+    test_case, file_count, tmp_path, request, testdata, update_golden
+):
+    """This is a stupid redundant test but wtf
+
+    c CaseHelper copies golden to tmp/expected and input to tmp/actual.
+    file-count should match the total number of files that exist in tmp
+    after this happens.
+
+    """
 
     # Instantiate a TestData object with the name of the test (originalname)
-    t = TestData(request.node.originalname, str(tmp_path))
-    # copy iitial and expected test case data to temp path
-    t.copy_test_data_to_temp(test_case)
+    c = CaseHelper(
+        testdata,
+        request.node.originalname,
+        test_case,
+        str(tmp_path),
+        update_golden=update_golden,
+    )
     # Execute against initial data
-    res = get_all_files(tmp_path)
-    assert len(res) == 3
+    res = get_all_files(c.temp_case_dir)
+    assert len(res) == file_count
 
 
 def test_rel_pos_validate(tmp_path):

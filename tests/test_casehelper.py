@@ -3,7 +3,7 @@
 """Tests for `treecrawl` package."""
 import os
 import pytest
-from treecrawl.diredit import Transformer
+from treecrawl.transformer import Transformer
 from treecrawl.casehelper import CaseHelper
 
 

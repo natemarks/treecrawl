@@ -186,8 +186,10 @@ def mkdir_p(target, is_file=False):
 def get_all_files(target_dir):
     """Recurse the all subdirs and list os abs paths
 
-    Args:
-        target_dir (str): path to target directory
+    :param str target_dir: Indicates whether the target is a file
+
+
+    :rtype: List[str]
     """
     import os
 
