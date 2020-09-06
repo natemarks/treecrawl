@@ -25,7 +25,15 @@ libraries to make it easier to maniuplate files in a directory tree
 
 Usage
 --------
-For examples see tests/test_casehelper.py
+
+This project makes it easier to edit directory trees and to test those edits.
+
+** CAUTION!! **
+treecrawl doesn't protect you from mistreating your files by, for example, corrupting a binary file because you transformed it like a text file. In fact, utility.file_to_string() encodes binary to utf-8 ignoring errors, so it will help you wreck your files.
+
+I generally manage this with scalpel-like opt-in targeting  when I override Transformer.is_target().  I use extensions where it's adequate, but if I need something more robust, I might use python-magic.
+
+Check out the example transformer in tests.test_casehelper.MakeUpper
 
 The example Transformer sub-class (MakeUpper) is a trivial example for using the Transformer class. remember the following tips:
 Always override Transformer.transform

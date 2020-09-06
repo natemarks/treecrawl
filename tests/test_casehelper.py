@@ -14,12 +14,20 @@ class MakeUpper(Transformer):
         super().__init__(input=input, output=output, dry_run=dry_run)
 
     def is_target(self, i_file):
-        if str(i_file).endswith(".skip"):
-            return False
+        included_extensions = [".txt"]
 
+        # Regardless of extension if the file is in a .git directory
+        # exclude it
         if ".git" in i_file.split(os.path.sep):
             return False
-        return True
+
+        # now target only files ending in ".txt
+        # i could use
+        _, ext = os.path.splitext(i_file)
+        if ext in included_extensions:
+            return True
+
+        return False
 
     def transform(self, source_file, destination_file):
         from treecrawl.utility import file_to_string

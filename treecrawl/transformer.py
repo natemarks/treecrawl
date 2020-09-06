@@ -116,7 +116,8 @@ class Transformer(object):
         implementation edits all files. Override this method to customizing
         file targeting
 
-        By default skip files ending in .skip
+        WARNING!! I use opt-in targeting because treecrawl functions do not
+        protect your binary files from being manipulated like  text files
 
         :param str i_file: abs path to target candidate
 
