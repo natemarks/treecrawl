@@ -30,6 +30,7 @@ dev_requirements = {
         "Sphinx==3.1.2",
         "twine==3.2.0",
         "wheel==0.34.2",
+        "check-manifest==0.42",
     ]
 }
 
