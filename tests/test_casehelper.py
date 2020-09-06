@@ -16,6 +16,10 @@ class MakeUpper(Transformer):
     def is_target(self, i_file):
         included_extensions = [".txt"]
 
+        # if it's not a file, right?
+        if not os.path.isfile(i_file):
+            return False
+
         # Regardless of extension if the file is in a .git directory
         # exclude it
         if ".git" in i_file.split(os.path.sep):
