@@ -2,7 +2,7 @@
 
 __author__ = """Nate Marks"""
 __email__ = "npmarks@gmail.com"
-__version__ = "0.1.21"
+__version__ = "0.1.22"
 
 
 from .transformer import Transformer
