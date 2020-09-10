@@ -80,4 +80,9 @@ dist: clean ## builds source and wheel package
 
 
 release: dist ## package and upload a release
-	twine upload --repository testpypi dist/*
+	( \
+		source .venv/bin/activate; \
+		pip install -e .[dev]; \
+		twine upload dist/*; \
+	)
+
