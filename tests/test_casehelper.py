@@ -8,7 +8,7 @@ from treecrawl.casehelper import CaseHelper
 
 
 class MakeUpper(Transformer):
-    """Convert non-ASCII files to ASCII"""
+    """Convert lower case contents of  text files to upper case"""
 
     def __init__(self, input, output, dry_run=False):
         super().__init__(input=input, output=output, dry_run=dry_run)
